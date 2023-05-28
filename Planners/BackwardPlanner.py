@@ -55,6 +55,11 @@ class BackwardPlanner(Planner):
 
     def successor(self, state, current_state_index):
         result = []
+        for action in self.problem.get_domain().get_actions():
+            if action.is_relevant(state):
+                new_state = action.regress(state)
+                new_state.set_parent_index(current_state_index)
+                result.append(new_state)
         return result
 
     def goal_test(self, state):
